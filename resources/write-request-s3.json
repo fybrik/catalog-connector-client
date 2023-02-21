@@ -1,6 +1,18 @@
 {
-  "destinationCatalogID": "catalogID",
-  "destinationAssetID": "demo-id",
+  "destinationCatalogID": "catalog-id",
+  "destinationAssetID": "paysim-csv",
+  "credentials": "/v1/kubernetes-secrets/data-creds?namespace=fybrik-notebook-sample",
+  "details": {
+    "dataFormat": "csv",
+    "connection": {
+      "name": "s3",
+      "s3": {
+        "endpoint": "http://s3.fybrik-system:9090",
+        "bucket": "bucket1",
+        "object_key": "data.csv"
+      }
+    }
+  },
   "resourceMetadata": {
     "name": "Synthetic Financial Datasets For Fraud Detection",
     "geography": "theshire ",
@@ -27,18 +39,5 @@
         }
       }
     ]
-  },
-  "details": {
-    "format": "csv",
-    "connection": {
-      "name": "mysql",
-      "mysql": {
-        "host": "mysql.fybrik-airbyte-sample",
-        "port": 3306,
-        "database": "test",
-        "table": "demo"
-      }
-    }
-  },
-  "credentials": "/v1/kubernetes-secrets/dummy-creds?namespace=dummy-namespace2"
+  }
 }
