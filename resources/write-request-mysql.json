@@ -1,0 +1,28 @@
+{
+  "destinationCatalogID": "catalogID",
+  "destinationAssetID": "demo-id",
+  "resourceMetadata": {
+    "name": "paysim-csv",
+    "resourceColumn": [
+      {
+        "name": "nameDest",
+        "tags": {
+          "PII": true
+        }
+      }
+    ]
+  },
+  "details": {
+    "format": "csv",
+    "connection": {
+      "name": "mysql",
+      "mysql": {
+        "host": "mysql.fybrik-airbyte-sample",
+        "port": 3306,
+        "database": "test",
+        "table": "demo"
+      }
+    }
+  },
+  "credentials": "/v1/kubernetes-secrets/dummy-creds?namespace=dummy-namespace2"
+}
