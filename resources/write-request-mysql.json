@@ -1,0 +1,44 @@
+{
+  "destinationCatalogID": "catalogID",
+  "destinationAssetID": "demo-id",
+  "resourceMetadata": {
+    "name": "Synthetic Financial Datasets For Fraud Detection",
+    "geography": "theshire ",
+    "tags": {
+      "finance": "true"
+    },
+    "columns": [
+      {
+        "name": "nameOrig",
+        "tags": {
+          "PII": "true"
+        }
+      },
+      {
+        "name": "oldbalanceOrg",
+        "tags": {
+          "PII": "true"
+        }
+      },
+      {
+        "name": "newbalanceOrig",
+        "tags": {
+          "PII": "true"
+        }
+      }
+    ]
+  },
+  "details": {
+    "format": "csv",
+    "connection": {
+      "name": "mysql",
+      "mysql": {
+        "host": "mysql.fybrik-airbyte-sample",
+        "port": 3306,
+        "database": "test",
+        "table": "demo"
+      }
+    }
+  },
+  "credentials": "/v1/kubernetes-secrets/dummy-creds?namespace=dummy-namespace2"
+}
