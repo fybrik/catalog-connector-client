@@ -7,7 +7,7 @@ import (
 	"emperror.dev/errors"
 	"encoding/json"
 	"github.com/spf13/cobra"
-	"io/ioutil"
+	"io"
 	"k8s.io/apimachinery/pkg/util/validation/field"
 	"os"
 	"strings"
@@ -77,11 +77,13 @@ func ValidateAssetResponse(response interface{}, taxonomyFile string, log *zerol
 }
 
 func handleRead(requestJsonFile *os.File, catalog dcclient.DataCatalog, log *zerolog.Logger) error {
-	byteValue, _ := ioutil.ReadAll(requestJsonFile)
+	byteValue, _ := io.ReadAll(requestJsonFile)
 	var dataCatalogReq datacatalog.GetAssetRequest
-	json.Unmarshal(byteValue, &dataCatalogReq)
-	var response *datacatalog.GetAssetResponse
 	var err error
+	if err = json.Unmarshal(byteValue, &dataCatalogReq); err != nil {
+		return errors.Wrap(err, "dataCatalog request unmarshal failed")
+	}
+	var response *datacatalog.GetAssetResponse
 
 	if response, err = catalog.GetAssetInfo(&dataCatalogReq, credentialPath); err != nil {
 		return errors.Wrap(err, "failed to receive the catalog connector response")
@@ -95,12 +97,13 @@ func handleRead(requestJsonFile *os.File, catalog dcclient.DataCatalog, log *zer
 }
 
 func handleWrite(requestJsonFile *os.File, catalog dcclient.DataCatalog, log *zerolog.Logger) error {
-	byteValue, _ := ioutil.ReadAll(requestJsonFile)
+	byteValue, _ := io.ReadAll(requestJsonFile)
 	var dataCatalogReq datacatalog.CreateAssetRequest
-	json.Unmarshal(byteValue, &dataCatalogReq)
-	var response *datacatalog.CreateAssetResponse
 	var err error
-
+	if err = json.Unmarshal(byteValue, &dataCatalogReq); err != nil {
+		return errors.Wrap(err, "dataCatalog request unmarshal failed")
+	}
+	var response *datacatalog.CreateAssetResponse
 	if response, err = catalog.CreateAsset(&dataCatalogReq, credentialPath); err != nil {
 		log.Error().Err(err).Msg("failed to receive the catalog connector response")
 		return err
