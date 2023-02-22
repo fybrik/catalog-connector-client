@@ -151,7 +151,7 @@ func RootCmd() *cobra.Command {
 	cmd.PersistentFlags().StringVar(&requestFile, requestJsonOption, "resources/read-request.json", "Json file containing the payload of the request")
 	cmd.PersistentFlags().StringVar(&requestOperation, requestOperationOption, "get-asset", "Request operation. valid options are get-asset or create-asset")
 	cmd.PersistentFlags().StringVar(&credentialPath, credentialPathOption, "/v1/kubernetes-secrets/my-secret?namespace=default", "Credential path")
-	cmd.PersistentFlags().StringVar(&catalogconnectorUrl, catalogconnectorUrlOption, "http://localhost:8888", "Catalog connector Url")
+	cmd.PersistentFlags().StringVar(&catalogconnectorUrl, catalogconnectorUrlOption, "http://localhost:8080", "Catalog connector Url")
 	cmd.MarkFlagsRequiredTogether(requestJsonOption, requestOperationOption, credentialPathOption, catalogconnectorUrlOption)
 
 	return cmd
