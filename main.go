@@ -8,6 +8,8 @@ import (
 	"encoding/json"
 	"github.com/spf13/cobra"
 	"io"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/validation/field"
 	"os"
 	"strings"
@@ -69,11 +71,12 @@ func ValidateAssetResponse(response interface{}, taxonomyFile string, log *zerol
 	}
 
 	// Return any error
-	if len(allErrs) == 0 {
-		return nil
+	if len(allErrs) != 0 {
+		return apierrors.NewInvalid(
+			schema.GroupKind{Group: "app.fybrik.io", Kind: "infrastructure"}, "", allErrs)
 	}
 
-	return errors.New("allErrs is not null")
+	return nil
 }
 
 func handleRead(requestJsonFile *os.File, catalog dcclient.DataCatalog, log *zerolog.Logger) error {
